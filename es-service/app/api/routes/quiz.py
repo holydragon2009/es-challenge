@@ -1,3 +1,6 @@
+import random
+
+import requests
 from fastapi import HTTPException
 from fastapi import APIRouter, Depends
 
@@ -30,7 +33,16 @@ async def submit_answer(
     quiz_user = await quiz_repo.get(quiz_id=quiz_id, user_id=user.id)
     if not quiz_user:
         raise HTTPException(status_code=404, detail="Quiz not found")
+    res = requests.post(
+        url='leaderboard/{quiz_id}/score',
+        headers={"Content-Type": "application/json"},
+        data={"score": random.randint(1, 100)},
+        timeout=10
+    )
+    res.raise_for_status()  # Check if the response returned a 4xx or 5xx
+    print(
+        f"POST Response Status: {res.status_code}, Response Body: {res.text}")
     return await quiz_repo.update(
         quiz_user=quiz_user,
-        answer=request.answer)
-
+        answer=request.answer
+    )
