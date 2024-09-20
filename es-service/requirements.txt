@@ -1,0 +1,16 @@
+# app
+# fastapi = "^0.115.0"
+fastapi[standard]
+sqlalchemy
+sqlmodel
+asyncpg
+redis
+requests
+loguru
+databases
+bcrypt
+passlib
+PyJWT
+advanced-alchemy
+python-socketio
+redis
